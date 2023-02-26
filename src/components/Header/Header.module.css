@@ -1,0 +1,113 @@
+.HeaderLayout{
+    width: 100%;
+    height: 80px;
+    position: sticky;
+    z-index: 10;
+    top:0;
+    left:0;
+
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+}
+.HeaderLayoutLight{
+    background-color: rgb(0, 13, 253);
+    border-bottom: 10px solid yellow;
+}
+.HeaderLayoutDark{
+    background-color: rgb(0, 0, 0);
+    border-bottom: 10px solid #EE0000;
+}
+
+.Header{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    max-width: 1280px;
+    width: 100%;
+    height: 80px;
+    padding: 5px 15px;
+}
+.leftHeader{
+    display: flex;
+    column-gap: 30px;
+    align-items: flex-start;
+    padding-top: 15px;
+    width: 300px;
+}
+.GenreMenuSize{
+    width: 100px;
+}
+
+.searchForm {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+.input{
+    width: 450px;
+    height: 30px;
+    border:none;
+    font-size: 1.3em;
+    border-radius: 5px 0 0 5px;
+    padding: 0 15px;
+    box-sizing: border-box;
+}
+.inputLight{
+    background-color: #fff;
+    color: blue;
+}
+.inputDark{
+    background-color: #2d2d2d;
+    color: white;
+}
+.inputDark:focus{
+    outline: none;;
+    color: #fff;
+}
+.inputLight:focus{
+    outline: none;;
+    color: blue;
+}
+.inputs{
+    display: flex;
+    align-items: center;
+}
+
+.searchButton{
+    height: 30px;
+    padding: 0 10px;
+    border-radius: 0 5px 5px 0;
+    border: none;
+    font-size: 1.1em;
+}
+.searchButtonLight{
+    background-color: #fcfc73;
+    color: #1b35e1;
+}
+.searchButtonDark{
+    background-color: #880000;
+    color:white;
+}
+
+.searchButtonLight:hover{
+    cursor: pointer;
+    background-color: #f3f345;
+}
+
+.searchButtonLight:hover{
+    cursor: pointer;
+    background-color: #f3f345;
+}
+.userIconAndLang{
+    display: flex;
+    column-gap:10px;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo img{
+    height: 40px;
+}

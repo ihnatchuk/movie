@@ -1,0 +1,5 @@
+body, h1, h2, h3, p{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
