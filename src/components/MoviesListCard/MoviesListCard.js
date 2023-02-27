@@ -15,13 +15,13 @@ const MoviesListCard = ({movie}) => {
     const {id, poster_path, title, genre_ids, release_date, vote_average} = movie
     const year = release_date ? release_date.split('-')[0] : 'no data'
 
-    const {genres, darkTheme} = useSelector(state => state.movies)
+    const {genres, langId, darkTheme} = useSelector(state => state.movies)
     const navigate = useNavigate()
 
     const dispatch = useDispatch()
     const click = (id) => {
         dispatch(setMovieInfo(movie))
-        navigate(`/details/${id}`, {state: id})
+        navigate(`/details/${id}/${langId}`, {state: id})
     }
 
     let cx = classNames.bind(css);

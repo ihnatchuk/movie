@@ -8,7 +8,7 @@ let initialState = {
     cast:[],
     movieInfo:null,
     movieDetails:null,
-    filterByGenre:'',
+    filterByGenre:'0',
     searchString:'',
     isSearching:false,
     langId:1,

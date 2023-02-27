@@ -1,7 +1,7 @@
 import './App.css';
 import {Navigate, Route, Routes} from "react-router-dom";
 
-import {MovieDetailsPage, MoviePage, NotFoundPage} from "./pages";
+import {MovieDetailsPage, MoviePage, NotFoundPage, SearchPage} from "./pages";
 import {MainLayout} from "./layouts";
 
 function App() {
@@ -11,9 +11,10 @@ function App() {
 
             <Routes>
                 <Route path={'/'} element={<MainLayout/>}>
-                    <Route index element={<Navigate to={'movies'}/>}/>
-                    <Route path={'movies'} element={<MoviePage/>}/>
-                    <Route path={'/details/:movieId'} element={<MovieDetailsPage/>}/>
+                    <Route index element={<Navigate to={'movies/0/1/1'}/>}/>
+                    <Route path={'movies/:genre/:lang/:page'} element={<MoviePage/>}/>
+                    <Route path={'/search/:query/:lang/:page'} element={<SearchPage/>}/>
+                    <Route path={'/details/:movieId/:lang'} element={<MovieDetailsPage/>}/>
                 </Route>
 
                 <Route path={'*'} element={<NotFoundPage/>}/>

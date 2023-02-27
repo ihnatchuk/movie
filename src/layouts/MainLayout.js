@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Outlet, useSearchParams} from "react-router-dom";
+import {Outlet} from "react-router-dom";
 
 import css from './MainLayout.module.css'
 import {useDispatch, useSelector} from "react-redux";
@@ -27,51 +27,18 @@ const MainLayout = () => {
         },
     });
 
-    const {langId, filterByGenre, searchString, page} = useSelector(state => state.movies);
+    const {langId} = useSelector(state => state.movies);
     const dispatch = useDispatch()
 
-    const [query, setQuery] = useSearchParams({lang: '1', genres: '', search: '', page: '1'});
-
-
-    // dispatch(setFilterByGenre(query.get('genres')))
-    // dispatch(setLangId(query.get('lang')))
-    // dispatch(setPage(query.get('page')))
-
-
     useEffect(() => {
-        dispatch(movieAction.getGenres({langId: query.get('lang')}))
-    }, [dispatch, query])
-
-    useEffect(() => {
-
-        if (query.get('search')||searchString) {
-            dispatch(movieAction.searchMovies(
-                {
-                    search:query.get('search'),
-                    page: query.get('page'),
-                    langId: query.get('lang'),
-                }
-            ))
-
-        } else
-        {
-            dispatch(movieAction.discoverMovies(
-                {
-                    page: query.get('page')||page,
-                    langId: query.get('lang')||langId,
-                    filterByGenre: query.get('genres')||filterByGenre
-                }
-            ))
-        }
-
-
-    }, [dispatch, query])
+        dispatch(movieAction.getGenres({langId}))
+    }, [dispatch, langId])
 
     return (
         <ThemeProvider theme={theme}>
             <div className={css.Main}>
-                <Header query={query} setQuery={setQuery}/>
-                <Outlet context={[query, setQuery]}/>
+                <Header/>
+                <Outlet/>
             </div>
         </ThemeProvider>
     );

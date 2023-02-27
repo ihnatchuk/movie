@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
@@ -9,33 +9,32 @@ import classNames from "classnames/bind";
 import {wordsLang as textLang} from "../../configs/textLang";
 import {LangSelect} from "../LangSelect";
 import {GenresMenu} from "../GenresMenu";
+import {useNavigate} from "react-router-dom";
 
-const Header = ({query, setQuery}) => {
-
-    const [search, setSearch] = useState('')
-
+const Header = () => {
     const {langId, searchString, darkTheme} = useSelector(state => state.movies)
 
     const dispatch = useDispatch()
+    const navigate = useNavigate()
+
+    const logoClick=()=>{
+        dispatch(setSearchString(''))
+        navigate('/movies/0/1/1')
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
         const form = e.target;
         const searchString = form.search.value;
-
         dispatch(setSearchString(searchString))
-
-        setQuery(query => (
-            {
-                lang: query.get('lang'),
-                genres: '',
-                search: searchString,
-                page: '1',
-            })
-        )
-        dispatch(setFilterByGenre(''))
+        dispatch(setFilterByGenre('0'))
         dispatch(setPage(1))
+        if (!!searchString) {
+            navigate(`/search/${searchString}/${langId}/1`)
+        } else {
+            navigate(`/movies/0/${langId}/1`)
+        }
     }
 
     let cx = classNames.bind(css);
@@ -64,17 +63,16 @@ const Header = ({query, setQuery}) => {
             <div className={css.Header}>
 
                 <div className={css.leftHeader}>
-                    <div className={css.logo} >
+                    <div className={css.logo} onClick={()=>logoClick()}>
                         <img src={require("../../img/m4u.png")} alt=""/>
                     </div>
 
                     {
-                        !searchString&&
-                        <div className={css.GenreMenuSize} >
-                            <GenresMenu query={query} setQuery={setQuery}/>
+                        !searchString &&
+                        <div className={css.GenreMenuSize}>
+                            <GenresMenu/>
                         </div>
                     }
-
 
                 </div>
 
@@ -84,8 +82,8 @@ const Header = ({query, setQuery}) => {
                             <input
                                 type="search"
                                 name="search"
-                                value={search}
-                                onChange={e => setSearch(e.target.value)}
+                                value={searchString}
+                                onChange={e => dispatch(setSearchString(e.target.value))}
                                 className={inputClass}
                                 placeholder={textLang.Search[langId]}
                             />
@@ -102,7 +100,7 @@ const Header = ({query, setQuery}) => {
 
                 <div className={css.userIconAndLang}>
                     <SwitchTheme/>
-                    <LangSelect setQuery={setQuery}/>
+                    <LangSelect/>
                     <AccountCircleIcon sx={{fontSize: 40, color: 'white'}}/>
                 </div>
 

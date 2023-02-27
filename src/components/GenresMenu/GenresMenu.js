@@ -7,32 +7,30 @@ import {useDispatch, useSelector} from "react-redux";
 import {setFilterByGenre, setPage, setSearchString} from "../../redux";
 
 import {wordsLang as textLang} from "../../configs/textLang";
+import {useNavigate} from "react-router-dom";
 
 const ITEM_HEIGHT = 40;
 
-export function GenresMenu({ query, setQuery }) {
+export function GenresMenu() {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
+    const {langId, page, searchString, filterByGenre, genres, darkTheme}=useSelector(state=>state.movies)
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
 
-    const { genres, searchString, darkTheme, langId} = useSelector(state => state.movies)
     const dispatch = useDispatch()
+    const navigate=useNavigate()
 
     const click = (id) => {
-        setQuery((query)=>(
-            {
-                lang:query.get('lang')||langId,
-                genres:id,
-                search:'',
-                page:1}))
 
         dispatch(setFilterByGenre( id ))
         dispatch(setPage(1))
         document.getElementsByTagName('input')[0].value = ''
         dispatch(setSearchString(''))
+        navigate(`movies/${id}/${langId}/${page}`)
+
 
         setAnchorEl(null);
     }
@@ -78,7 +76,7 @@ export function GenresMenu({ query, setQuery }) {
                 {
                     genres.map((genre) =>
                             <MenuItem key={genre.id}
-                                      selected={genre.id === +query.get('genres')}
+                                      selected={genre.id === +filterByGenre}
                                       onClick={() => click(genre.id)}
                                       sx={{
                                           color: '#fff',

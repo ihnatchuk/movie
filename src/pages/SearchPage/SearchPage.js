@@ -1,45 +1,44 @@
-import React, {useEffect} from "react";
+import React, {useEffect} from 'react';
+import {useNavigate, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {Pagination} from "@mui/material";
 import classNames from "classnames/bind";
-import {useNavigate, useParams} from "react-router-dom";
 
 import {MoviesList} from "../../components";
 import {movieAction, setPage} from "../../redux";
-import css from './MoviePage.module.css'
+import css from "./SearchPage.module.css";
 
-const MoviePage = () => {
-    const {langId, filterByGenre, total_pages, darkTheme} = useSelector(state => state.movies);
+const SearchPage = () => {
+    const {total_pages, darkTheme} = useSelector(state => state.movies)
 
-    const searchQuery=useParams()
-    const navigate=useNavigate()
-
+    const searchQuery = useParams()
     const dispatch = useDispatch()
-    const handleChange = (event, value) => {
+    const navigate = useNavigate();
 
+    const handleChange = (event, value) => {
         dispatch(setPage(value));
-        navigate(`/movies/${filterByGenre}/${langId}/${value}`)
+        navigate(`/search/${searchQuery.query}/${searchQuery.lang}/${value}`)
     }
 
-    useEffect(() => {
 
-        dispatch(movieAction.discoverMovies(
+    useEffect(() => {
+        dispatch(movieAction.searchMovies(
             {
+                search: searchQuery.query,
                 page: searchQuery.page,
                 langId: searchQuery.lang,
-                filterByGenre: searchQuery.genre==='0'?'':searchQuery.genre
             }
         ))
     }, [dispatch, searchQuery])
 
     let cx = classNames.bind(css);
-    const moviePageClass = cx(
+    const searchPageClass = cx(
         {
-            'moviePage': true,
-            'moviePageLight': !darkTheme,
-            'moviePageDark': darkTheme
+            'searchPage': true,
+            'searchPageLight': !darkTheme,
+            'searchPageDark': darkTheme
         })
-    const paginationClass = cx(
+    const paginatClass = cx(
         {
             'pagAlign': true,
             'pagAlignLight': !darkTheme,
@@ -48,8 +47,8 @@ const MoviePage = () => {
     const paginColor = darkTheme ? 'secondary' : 'primary'
 
     return (
-        <div className={moviePageClass}>
-            <div className={paginationClass}>
+        <div className={searchPageClass}>
+            <div className={paginatClass}>
                 <Pagination
                     outlined=''
                     color={paginColor}
@@ -62,4 +61,4 @@ const MoviePage = () => {
     );
 };
 
-export {MoviePage};
+export {SearchPage};
